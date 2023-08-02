@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaApp", "SocialMediaApp\SocialMediaApp.csproj", "{9F143351-9F12-40F8-8CE9-7CC7F3958E44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F143351-9F12-40F8-8CE9-7CC7F3958E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F143351-9F12-40F8-8CE9-7CC7F3958E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F143351-9F12-40F8-8CE9-7CC7F3958E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F143351-9F12-40F8-8CE9-7CC7F3958E44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD17DDC8-08E1-43AD-8C52-EA02315CCDE6}
+	EndGlobalSection
+EndGlobal
