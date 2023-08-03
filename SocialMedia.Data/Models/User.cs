@@ -15,12 +15,5 @@
         public string? PhoneNumber { get; set; }
 
         public ICollection<Post> Posts { get; set; } = null!;
-
-
-
-
-
-
-
     }
 }
