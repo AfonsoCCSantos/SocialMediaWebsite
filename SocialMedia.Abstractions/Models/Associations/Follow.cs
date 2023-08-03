@@ -1,4 +1,4 @@
-﻿namespace SocialMedia.Data.Models.Associations
+﻿namespace SocialMedia.Abstractions.Models.Associations
 {
     public class Follow
     {

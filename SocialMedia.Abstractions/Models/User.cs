@@ -1,6 +1,6 @@
-﻿using SocialMedia.Data.Models.Associations;
+﻿using SocialMedia.Abstractions.Models.Associations;
 
-namespace SocialMedia.Data.Models
+namespace SocialMedia.Abstractions.Models
 {
     public class User
     {

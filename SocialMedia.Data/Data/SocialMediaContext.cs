@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SocialMedia.Data.Models.Associations;
-using SocialMedia.Data.Models;
+using SocialMedia.Abstractions.Models;
+using SocialMedia.Abstractions.Models.Associations;
 
 namespace SocialMedia.Data.Data
 {

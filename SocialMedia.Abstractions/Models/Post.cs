@@ -1,4 +1,4 @@
-﻿namespace SocialMedia.Data.Models
+﻿namespace SocialMedia.Abstractions.Models
 {
     public class Post
     {
