@@ -2,11 +2,10 @@
 using SocialMedia.Data.Models.Associations;
 using SocialMedia.Data.Models;
 
-namespace SocialMedia.API.Data
+namespace SocialMedia.Data.Data
 {
     public class SocialMediaContext : DbContext
     {
-
         public DbSet<User> Users { get; set; } = null!;
 
         public DbSet<Post> Posts { get; set; } = null!;

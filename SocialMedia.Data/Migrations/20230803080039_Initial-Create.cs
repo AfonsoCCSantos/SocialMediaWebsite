@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SocialMedia.API.Migrations
+namespace SocialMedia.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
