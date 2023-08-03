@@ -25,6 +25,10 @@ namespace SocialMedia.Data.Data
                 .HasOne(f => f.Following)
                 .WithMany(u => u.Following)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => new {u.UserName, u.Email})
+                .IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
