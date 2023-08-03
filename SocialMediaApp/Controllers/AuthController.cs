@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions.DTOs;
 using SocialMedia.Abstractions.Models;
+using SocialMedia.Abstractions.Requests;
 
 namespace SocialMedia.API.Controllers
 {
@@ -10,7 +11,7 @@ namespace SocialMedia.API.Controllers
     {
 
         [HttpPost]
-        public ActionResult<User> Register(UserDTO request)
+        public ActionResult<User> Register(RegisterUserRequest request)
         {
             return null;
 
