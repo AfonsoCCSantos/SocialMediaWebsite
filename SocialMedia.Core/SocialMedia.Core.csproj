@@ -4,4 +4,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMedia.Abstractions\SocialMedia.Abstractions.csproj" />
+    <ProjectReference Include="..\SocialMedia.Data\SocialMedia.Data.csproj" />
+  </ItemGroup>
 </Project>
