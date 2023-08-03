@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SocialMedia.Data": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ConnectionString": "Data Source=DESKTOP-RFQKAUE\\SQLEXPRESS;Initial Catalog=SocialMedia;Integrated Security=True"
+      }
+    }
+  }
+}
