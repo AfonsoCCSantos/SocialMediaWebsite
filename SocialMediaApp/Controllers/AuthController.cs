@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions;
+using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
 using SocialMedia.Core.Authorization;
 
@@ -37,10 +38,11 @@ namespace SocialMedia.API.Controllers
         [HttpPost("login")] 
         public async Task<ActionResult> LoginAsync(LoginUserRequest request)
         {
-            AuthenticationMessage message = await _authenticationService.LoginAsync(request);
-            if (message == AuthenticationMessage.Success)
+            User? user = await _authenticationService.LoginAsync(request);
+            if (user != null)
             {
-                return Ok();
+                string token = _jwtTokenCreator.CreateJwtToken(user);
+                return Ok(token);
             }
             return BadRequest();
         }

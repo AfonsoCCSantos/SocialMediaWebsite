@@ -35,16 +35,16 @@ namespace SocialMedia.Core.Authorization
             return AuthenticationMessage.Success;
         }
 
-        public async Task<AuthenticationMessage> LoginAsync(LoginUserRequest request)
+        public async Task<User?> LoginAsync(LoginUserRequest request)
         {
             var user = await _context.GetUserByEmail(request.Email);
             if (user != null && BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                return AuthenticationMessage.Success;
+                return user;
             }
             else
             {
-                return AuthenticationMessage.AuthenticationFailed;
+                return null;
             }
         }
     }
