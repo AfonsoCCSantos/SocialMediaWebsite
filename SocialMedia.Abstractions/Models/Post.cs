@@ -8,5 +8,18 @@
 
         public User User { get; set; } = null!;
 
+
+        public Post() 
+        {
+            //Needed for EFCore
+        }
+
+
+        public Post(string text, User user)
+        {
+            Text = text;
+            User = user;
+        }
+
     }
 }

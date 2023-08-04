@@ -23,5 +23,11 @@ namespace SocialMedia.Data
         {
             return await context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+
+        public static async Task<User?> GetUserById(this SocialMediaContext context,
+                                                       int id)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
     }
 }
