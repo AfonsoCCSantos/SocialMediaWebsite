@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SocialMedia.Core.Services;
 using SocialMedia.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SocialMediaContext>(options =>
     options.UseSqlServer(@"Data Source=DESKTOP-RFQKAUE\SQLEXPRESS;Initial Catalog=SocialMedia;Integrated Security=True;TrustServerCertificate=true;")
 );
+builder.Services.AddScoped<AuthenticationService>();
 
 var app = builder.Build();
 

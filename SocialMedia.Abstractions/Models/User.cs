@@ -24,5 +24,13 @@ namespace SocialMedia.Abstractions.Models
 
         public ICollection<Follow> Following { get; set; } = null!;
 
+        public User(string name, string email, string username, string password)
+        {
+            Name = name;
+            Email = email;
+            UserName = username;
+            PasswordHash = password;
+        }
+
     }
 }

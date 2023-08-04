@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SocialMedia.Abstractions\SocialMedia.Abstractions.csproj" />
     <ProjectReference Include="..\SocialMedia.Data\SocialMedia.Data.csproj" />
   </ItemGroup>

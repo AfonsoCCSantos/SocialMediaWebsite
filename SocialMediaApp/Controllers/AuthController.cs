@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SocialMedia.Abstractions.DTOs;
-using SocialMedia.Abstractions.Models;
+using SocialMedia.Abstractions;
 using SocialMedia.Abstractions.Requests;
+using SocialMedia.Core.Services;
 
 namespace SocialMedia.API.Controllers
 {
@@ -10,11 +10,25 @@ namespace SocialMedia.API.Controllers
     public class AuthController : ControllerBase
     {
 
-        [HttpPost]
-        public ActionResult<User> Register(RegisterUserRequest request)
-        {
-            return null;
+        private readonly AuthenticationService _authenticationService;
 
+        public AuthController(AuthenticationService authenticationService) 
+        {
+            _authenticationService = authenticationService;
+        }
+
+
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterAsync(RegisterUserRequest request)
+        {
+            RegistrationMessage message = await _authenticationService.RegisterAsync(request);
+            return message switch
+            {
+                RegistrationMessage.Success => Ok(),
+                RegistrationMessage.UsernameAlreadyTaken => Conflict("Username already taken"),
+                RegistrationMessage.EmailAlreadyRegistered => Conflict("Email already registered"),
+                _ => new StatusCodeResult(500),
+            };
         }
 
     }
