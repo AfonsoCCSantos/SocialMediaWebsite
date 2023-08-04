@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SocialMedia.Core;
 using SocialMedia.Core.Authorization;
 using SocialMedia.Data.Data;
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<SocialMediaContext>(options =>
     options.UseSqlServer(@"Data Source=DESKTOP-RFQKAUE\SQLEXPRESS;Initial Catalog=SocialMedia;Integrated Security=True;TrustServerCertificate=true;")
 );
 builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<PostService>();
 builder.Services.AddSingleton<JwtTokenCreator>();
 
 var app = builder.Build();

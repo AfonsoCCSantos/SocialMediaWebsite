@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions.Requests;
+using SocialMedia.Core;
 
 namespace SocialMedia.API.Controllers
 {
@@ -8,10 +10,22 @@ namespace SocialMedia.API.Controllers
     public class PostController : ControllerBase
     {
 
-        [HttpPost]
-        public ActionResult MakePost(PostRequest request)
+        private readonly PostService _postService;
+
+        public PostController(PostService postService)
         {
-            return null;
+            _postService = postService;
+        }
+
+        [HttpPost, Authorize]
+        public async Task<ActionResult> MakePostAsync(PostRequest request)
+        {
+            int result = await _postService.MakePost(request);
+            return result switch
+            {
+                404 => BadRequest(),
+                _ => Ok(),
+            };
         }
     }
 }
