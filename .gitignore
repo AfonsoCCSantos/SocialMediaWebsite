@@ -56,3 +56,4 @@ artifacts/
 
 ## Visual Studio 2019 ##
 .vs2019/
+/SocialMediaApp/appsettings.json
