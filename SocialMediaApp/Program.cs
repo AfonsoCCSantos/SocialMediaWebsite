@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using SocialMedia.API.Extensions;
 using SocialMedia.Core;
 using SocialMedia.Core.Authorization;
 using SocialMedia.Data.Data;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.SetupSwagger();
 builder.Services.AddDbContext<SocialMediaContext>(options =>
     options.UseSqlServer(@"Data Source=DESKTOP-RFQKAUE\SQLEXPRESS;Initial Catalog=SocialMedia;Integrated Security=True;TrustServerCertificate=true;")
 );
