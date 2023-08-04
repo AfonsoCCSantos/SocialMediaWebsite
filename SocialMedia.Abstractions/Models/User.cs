@@ -24,6 +24,11 @@ namespace SocialMedia.Abstractions.Models
 
         public ICollection<Follow> Following { get; set; } = null!;
 
+        public User()
+        {
+            //Required for EFCore
+        }
+
         public User(string name, string email, string username, string password)
         {
             Name = name;

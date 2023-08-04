@@ -12,7 +12,7 @@ using SocialMedia.Data.Data;
 namespace SocialMedia.Data.Migrations
 {
     [DbContext(typeof(SocialMediaContext))]
-    [Migration("20230803190934_InitialCreate")]
+    [Migration("20230804093908_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace SocialMedia.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SocialMedia.Data.Models.Associations.Follow", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Follow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace SocialMedia.Data.Migrations
                     b.ToTable("Follows");
                 });
 
-            modelBuilder.Entity("SocialMedia.Data.Models.Post", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace SocialMedia.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("SocialMedia.Data.Models.User", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,13 +83,13 @@ namespace SocialMedia.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -98,22 +98,25 @@ namespace SocialMedia.Data.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserName", "Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SocialMedia.Data.Models.Associations.Follow", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Follow", b =>
                 {
-                    b.HasOne("SocialMedia.Data.Models.User", "Follower")
+                    b.HasOne("SocialMedia.Abstractions.Models.User", "Follower")
                         .WithMany("Followers")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SocialMedia.Data.Models.User", "Following")
+                    b.HasOne("SocialMedia.Abstractions.Models.User", "Following")
                         .WithMany("Following")
                         .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -124,9 +127,9 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("Following");
                 });
 
-            modelBuilder.Entity("SocialMedia.Data.Models.Post", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
-                    b.HasOne("SocialMedia.Data.Models.User", "User")
+                    b.HasOne("SocialMedia.Abstractions.Models.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -135,7 +138,7 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SocialMedia.Data.Models.User", b =>
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.User", b =>
                 {
                     b.Navigation("Followers");
 
