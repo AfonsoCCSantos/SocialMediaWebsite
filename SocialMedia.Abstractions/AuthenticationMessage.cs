@@ -1,9 +1,10 @@
 ﻿namespace SocialMedia.Abstractions
 {
-    public enum RegistrationMessage
+    public enum AuthenticationMessage
     {
         EmailAlreadyRegistered,
         UsernameAlreadyTaken,
-        Success
+        Success,
+        AuthenticationFailed
     }
 }

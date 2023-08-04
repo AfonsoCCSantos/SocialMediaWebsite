@@ -16,15 +16,15 @@ namespace SocialMedia.Core.Services
             _context = context;
         }
 
-        public async Task<RegistrationMessage> RegisterAsync(RegisterUserRequest request)
+        public async Task<AuthenticationMessage> RegisterAsync(RegisterUserRequest request)
         {
             if (await _context.IsEmailAlreadyRegistered(request.Email))
             {
-                return RegistrationMessage.EmailAlreadyRegistered;
+                return AuthenticationMessage.EmailAlreadyRegistered;
             }
             if (await _context.IsUsernameTaken(request.Username))
             {
-                return RegistrationMessage.UsernameAlreadyTaken;
+                return AuthenticationMessage.UsernameAlreadyTaken;
             }
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
@@ -32,7 +32,20 @@ namespace SocialMedia.Core.Services
             await _context.AddAsync(newUser);
             _context.SaveChanges();
 
-            return RegistrationMessage.Success;
+            return AuthenticationMessage.Success;
+        }
+
+        public async Task<AuthenticationMessage> LoginAsync(LoginUserRequest request)
+        {
+            var user = await _context.GetUserByEmail(request.Email);
+            if (user != null && BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            {
+                return AuthenticationMessage.Success;
+            }
+            else
+            {
+                return AuthenticationMessage.AuthenticationFailed;
+            }
         }
     }
 }

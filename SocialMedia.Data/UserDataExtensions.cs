@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialMedia.Abstractions.Models;
 using SocialMedia.Data.Data;
 
 namespace SocialMedia.Data
@@ -15,6 +16,12 @@ namespace SocialMedia.Data
                                                        string username)
         {
             return await context.Users.AnyAsync(u => u.UserName == username);
+        }
+
+        public static async Task<User?> GetUserByEmail(this SocialMediaContext context,
+                                                       string email)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

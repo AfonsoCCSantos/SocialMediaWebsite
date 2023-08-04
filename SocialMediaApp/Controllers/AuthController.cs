@@ -21,14 +21,25 @@ namespace SocialMedia.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(RegisterUserRequest request)
         {
-            RegistrationMessage message = await _authenticationService.RegisterAsync(request);
+            AuthenticationMessage message = await _authenticationService.RegisterAsync(request);
             return message switch
             {
-                RegistrationMessage.Success => Ok(),
-                RegistrationMessage.UsernameAlreadyTaken => Conflict("Username already taken"),
-                RegistrationMessage.EmailAlreadyRegistered => Conflict("Email already registered"),
+                AuthenticationMessage.Success => Ok(),
+                AuthenticationMessage.UsernameAlreadyTaken => Conflict("Username already taken"),
+                AuthenticationMessage.EmailAlreadyRegistered => Conflict("Email already registered"),
                 _ => new StatusCodeResult(500),
             };
+        }
+
+        [HttpPost("login")] 
+        public async Task<ActionResult> LoginAsync(LoginUserRequest request)
+        {
+            AuthenticationMessage message = await _authenticationService.LoginAsync(request);
+            if (message == AuthenticationMessage.Success)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
     }
