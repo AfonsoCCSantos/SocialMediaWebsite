@@ -1,10 +1,8 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
-using SocialMedia.Abstractions;
+﻿using SocialMedia.Abstractions;
 using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
+using SocialMedia.Data;
 using SocialMedia.Data.Data;
-using System.Net;
 
 namespace SocialMedia.Core.Services
 {
@@ -20,11 +18,11 @@ namespace SocialMedia.Core.Services
 
         public async Task<RegistrationMessage> RegisterAsync(RegisterUserRequest request)
         {
-            if (await IsEmailAlreadyRegistered(request.Email))
+            if (await _context.IsEmailAlreadyRegistered(request.Email))
             {
                 return RegistrationMessage.EmailAlreadyRegistered;
             }
-            if (await IsUsernameTaken(request.Username))
+            if (await _context.IsUsernameTaken(request.Username))
             {
                 return RegistrationMessage.UsernameAlreadyTaken;
             }
@@ -35,16 +33,6 @@ namespace SocialMedia.Core.Services
             _context.SaveChanges();
 
             return RegistrationMessage.Success;
-        }
-
-        public async Task<bool> IsEmailAlreadyRegistered(string email)
-        {
-            return await _context.Users.AnyAsync(u => u.Email == email);
-        }
-
-        public async Task<bool> IsUsernameTaken(string username)
-        {
-            return await _context.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }
