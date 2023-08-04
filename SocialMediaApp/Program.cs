@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using SocialMedia.API.Extensions;
 using SocialMedia.Core;
 using SocialMedia.Core.Authorization;
 using SocialMedia.Data.Data;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +21,7 @@ builder.Services.AddDbContext<SocialMediaContext>(options =>
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<PostService>();
 builder.Services.AddSingleton<JwtTokenCreator>();
+builder.Services.SetupAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -28,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
