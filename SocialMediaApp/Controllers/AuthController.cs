@@ -11,10 +11,13 @@ namespace SocialMedia.API.Controllers
     {
 
         private readonly AuthenticationService _authenticationService;
+        private readonly JwtTokenCreator _jwtTokenCreator;
 
-        public AuthController(AuthenticationService authenticationService) 
+        public AuthController(AuthenticationService authenticationService,
+                              JwtTokenCreator jwtTokenCreator) 
         {
             _authenticationService = authenticationService;
+            _jwtTokenCreator = jwtTokenCreator;
         }
 
 

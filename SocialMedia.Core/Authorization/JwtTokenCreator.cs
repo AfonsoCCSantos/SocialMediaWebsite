@@ -7,16 +7,15 @@ using System.Text;
 
 namespace SocialMedia.Core.Authorization
 {
-    public class JwtToken
+    public class JwtTokenCreator
     {
 
         private readonly IConfiguration _configuration;
 
-        public JwtToken(IConfiguration configuration)
+        public JwtTokenCreator(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
 
         public string CreateJwtToken(User user)
         {
