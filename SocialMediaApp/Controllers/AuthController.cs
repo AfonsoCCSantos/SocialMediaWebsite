@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions;
+using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
 using SocialMedia.Core.Services;
+using System.Security.Claims;
 
 namespace SocialMedia.API.Controllers
 {
@@ -40,6 +42,16 @@ namespace SocialMedia.API.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+
+        public string CreateToken(User user)
+        {
+            List<Claim> claims = new()
+            {
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            return null;
         }
 
     }

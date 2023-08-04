@@ -4,7 +4,7 @@ using SocialMedia.Abstractions.Requests;
 using SocialMedia.Data;
 using SocialMedia.Data.Data;
 
-namespace SocialMedia.Core.Services
+namespace SocialMedia.Core.Authorization
 {
     public class AuthenticationService
     {
