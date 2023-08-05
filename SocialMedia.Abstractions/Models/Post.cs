@@ -14,6 +14,8 @@ namespace SocialMedia.Abstractions.Models
 
         public ICollection<Likes> Likes { get; set; } = null!;
 
+        public ICollection<Shares> Shares { get; set; } = null!;
+
         public Post() 
         {
             //Needed for EFCore

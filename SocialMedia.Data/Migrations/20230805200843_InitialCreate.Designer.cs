@@ -12,7 +12,7 @@ using SocialMedia.Data.Data;
 namespace SocialMedia.Data.Migrations
 {
     [DbContext(typeof(SocialMediaContext))]
-    [Migration("20230805185457_InitialCreate")]
+    [Migration("20230805200843_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -72,6 +72,29 @@ namespace SocialMedia.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Likes");
+                });
+
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Shares", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Shares");
                 });
 
             modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
@@ -178,6 +201,25 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Shares", b =>
+                {
+                    b.HasOne("SocialMedia.Abstractions.Models.Post", "Post")
+                        .WithMany("Shares")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Abstractions.Models.User", "User")
+                        .WithMany("SharedPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
                     b.HasOne("SocialMedia.Abstractions.Models.User", "User")
@@ -192,6 +234,8 @@ namespace SocialMedia.Data.Migrations
             modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
                     b.Navigation("Likes");
+
+                    b.Navigation("Shares");
                 });
 
             modelBuilder.Entity("SocialMedia.Abstractions.Models.User", b =>
@@ -203,6 +247,8 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("LikedPosts");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("SharedPosts");
                 });
 #pragma warning restore 612, 618
         }

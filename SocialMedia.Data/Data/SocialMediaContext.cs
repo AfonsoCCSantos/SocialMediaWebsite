@@ -40,6 +40,18 @@ namespace SocialMedia.Data.Data
                 .HasForeignKey(l => l.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Shares>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.SharedPosts)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Shares>()
+                .HasOne(s => s.Post)
+                .WithMany(p => p.Shares)
+                .HasForeignKey(s => s.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<User>()
                 .HasIndex(u => new {u.UserName, u.Email})
                 .IsUnique();
