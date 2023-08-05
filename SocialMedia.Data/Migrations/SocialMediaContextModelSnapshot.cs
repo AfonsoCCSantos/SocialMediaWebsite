@@ -48,6 +48,29 @@ namespace SocialMedia.Data.Migrations
                     b.ToTable("Follows");
                 });
 
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Likes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
+                });
+
             modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -133,6 +156,25 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("Following");
                 });
 
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Associations.Likes", b =>
+                {
+                    b.HasOne("SocialMedia.Abstractions.Models.Post", "Post")
+                        .WithMany("Likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SocialMedia.Abstractions.Models.User", "User")
+                        .WithMany("LikedPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
                 {
                     b.HasOne("SocialMedia.Abstractions.Models.User", "User")
@@ -144,11 +186,18 @@ namespace SocialMedia.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialMedia.Abstractions.Models.Post", b =>
+                {
+                    b.Navigation("Likes");
+                });
+
             modelBuilder.Entity("SocialMedia.Abstractions.Models.User", b =>
                 {
                     b.Navigation("Followers");
 
                     b.Navigation("Following");
+
+                    b.Navigation("LikedPosts");
 
                     b.Navigation("Posts");
                 });

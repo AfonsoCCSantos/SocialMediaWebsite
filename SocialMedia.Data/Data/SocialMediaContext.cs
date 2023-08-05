@@ -25,6 +25,19 @@ namespace SocialMedia.Data.Data
             modelBuilder.Entity<Follow>()
                 .HasOne(f => f.Following)
                 .WithMany(u => u.Following)
+                .HasForeignKey(f => f.FollowingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Likes>()
+                .HasOne(l => l.User)
+                .WithMany(u => u.LikedPosts)
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Likes>()
+                .HasOne(l => l.Post)
+                .WithMany(p => p.Likes)
+                .HasForeignKey(l => l.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>()

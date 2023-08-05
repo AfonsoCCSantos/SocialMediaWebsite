@@ -1,4 +1,6 @@
-﻿namespace SocialMedia.Abstractions.Models
+﻿using SocialMedia.Abstractions.Models.Associations;
+
+namespace SocialMedia.Abstractions.Models
 {
     public class Post
     {
@@ -10,6 +12,7 @@
 
         public DateTime CreatedAt { get; set; }
 
+        public ICollection<Likes> Likes { get; set; } = null!;
 
         public Post() 
         {

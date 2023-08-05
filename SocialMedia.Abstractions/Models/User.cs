@@ -24,6 +24,8 @@ namespace SocialMedia.Abstractions.Models
 
         public ICollection<Post> Posts { get; set; } = null!;
 
+        public ICollection<Likes> LikedPosts { get; set; } = null!;
+
         public ICollection<Follow> Followers { get; set; } = null!;
 
         public ICollection<Follow> Following { get; set; } = null!;
