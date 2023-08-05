@@ -33,12 +33,13 @@ namespace SocialMedia.Abstractions.Models
             //Required for EFCore
         }
 
-        public User(string name, string email, string username, string password)
+        public User(string name, string email, string username, string password, DateTime createdAt)
         {
             Name = name;
             Email = email;
             UserName = username;
             PasswordHash = password;
+            AccountCreatedAt = createdAt;
         }
 
     }

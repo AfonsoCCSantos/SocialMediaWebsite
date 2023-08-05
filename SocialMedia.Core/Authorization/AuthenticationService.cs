@@ -28,7 +28,7 @@ namespace SocialMedia.Core.Authorization
             }
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            User newUser = new(request.Name, request.Email, request.Username, passwordHash);
+            User newUser = new(request.Name, request.Email, request.Username, passwordHash, DateTime.Now);
             await _context.Users.AddAsync(newUser);
             _context.SaveChanges();
 
