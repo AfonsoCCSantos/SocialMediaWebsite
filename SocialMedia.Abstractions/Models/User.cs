@@ -18,6 +18,10 @@ namespace SocialMedia.Abstractions.Models
 
         public string? PhoneNumber { get; set; }
 
+        public DateTime? DateOfBirth { get; set; }
+
+        public DateTime AccountCreatedAt { get; set; }
+
         public ICollection<Post> Posts { get; set; } = null!;
 
         public ICollection<Follow> Followers { get; set; } = null!;

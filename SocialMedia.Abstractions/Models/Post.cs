@@ -8,6 +8,8 @@
 
         public User User { get; set; } = null!;
 
+        public DateTime CreatedAt { get; set; }
+
 
         public Post() 
         {
