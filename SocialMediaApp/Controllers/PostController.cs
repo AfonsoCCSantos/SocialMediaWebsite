@@ -20,10 +20,11 @@ namespace SocialMedia.API.Controllers
         [HttpPost, Authorize]
         public async Task<ActionResult> MakePostAsync(PostRequest request)
         {
-            int result = await _postService.MakePost(request);
+            int result = await _postService.MakePost(request, HttpContext);
             return result switch
             {
                 404 => BadRequest(),
+                401 => Unauthorized(),
                 _ => Ok(),
             };
         }

@@ -29,7 +29,7 @@ namespace SocialMedia.Core.Authorization
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             User newUser = new(request.Name, request.Email, request.Username, passwordHash);
-            await _context.AddAsync(newUser);
+            await _context.Users.AddAsync(newUser);
             _context.SaveChanges();
 
             return AuthenticationMessage.Success;

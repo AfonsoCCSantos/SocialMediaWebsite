@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.Abstractions.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,12 +8,12 @@ using System.Text;
 
 namespace SocialMedia.Core.Authorization
 {
-    public class JwtTokenCreator
+    public class JwtTokenFunctions
     {
 
         private readonly IConfiguration _configuration;
 
-        public JwtTokenCreator(IConfiguration configuration)
+        public JwtTokenFunctions(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -37,6 +38,16 @@ namespace SocialMedia.Core.Authorization
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        public string? GetUsernameFromToken(HttpRequest httpRequest) 
+        {
+            var token = httpRequest.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "username");
+            return usernameClaim?.Value;
         }
     }
 }
