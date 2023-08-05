@@ -16,30 +16,17 @@ namespace SocialMedia.Data.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Follow>()
-                .HasOne(f => f.Follower)
-                .WithMany(u => u.Followers)
-                .HasForeignKey(f => f.FollowerId)
-                .OnDelete(DeleteBehavior.NoAction);
+            ConfigureFollowTable(modelBuilder);
+            ConfigureLikesTable(modelBuilder);
+            ConfigureSharesTable(modelBuilder);
 
-            modelBuilder.Entity<Follow>()
-                .HasOne(f => f.Following)
-                .WithMany(u => u.Following)
-                .HasForeignKey(f => f.FollowingId)
-                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => new { u.UserName, u.Email })
+                .IsUnique();
+        }
 
-            modelBuilder.Entity<Likes>()
-                .HasOne(l => l.User)
-                .WithMany(u => u.LikedPosts)
-                .HasForeignKey(l => l.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Likes>()
-                .HasOne(l => l.Post)
-                .WithMany(p => p.Likes)
-                .HasForeignKey(l => l.PostId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+        private static void ConfigureSharesTable(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Shares>()
                 .HasOne(s => s.User)
                 .WithMany(u => u.SharedPosts)
@@ -51,10 +38,36 @@ namespace SocialMedia.Data.Data
                 .WithMany(p => p.Shares)
                 .HasForeignKey(s => s.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
+        }
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => new {u.UserName, u.Email})
-                .IsUnique();
+        private static void ConfigureLikesTable(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Likes>()
+                .HasOne(l => l.User)
+                .WithMany(u => u.LikedPosts)
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Likes>()
+                .HasOne(l => l.Post)
+                .WithMany(p => p.Likes)
+                .HasForeignKey(l => l.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
+
+        private static void ConfigureFollowTable(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Follow>()
+                .HasOne(f => f.Follower)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(f => f.FollowerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(f => f.Following)
+                .WithMany(u => u.Following)
+                .HasForeignKey(f => f.FollowingId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
