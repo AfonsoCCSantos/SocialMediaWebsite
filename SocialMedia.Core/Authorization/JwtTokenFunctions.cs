@@ -46,7 +46,7 @@ namespace SocialMedia.Core.Authorization
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
 
-            var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "username");
+            var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name);
             return usernameClaim?.Value;
         }
     }
