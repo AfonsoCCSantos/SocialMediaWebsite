@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SocialMedia.Core.Authorization
+namespace SocialMedia.Core
 {
     public class JwtTokenFunctions
     {
@@ -40,7 +40,7 @@ namespace SocialMedia.Core.Authorization
             return jwt;
         }
 
-        public string? GetUsernameFromToken(HttpRequest httpRequest) 
+        public string? GetUsernameFromToken(HttpRequest httpRequest)
         {
             var token = httpRequest.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var tokenHandler = new JwtSecurityTokenHandler();

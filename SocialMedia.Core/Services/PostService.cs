@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
-using SocialMedia.Core.Authorization;
 using SocialMedia.Data;
 using SocialMedia.Data.Data;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace SocialMedia.Core
+namespace SocialMedia.Core.Services
 {
     public class PostService
     {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.API.Extensions;
 using SocialMedia.Core;
-using SocialMedia.Core.Authorization;
+using SocialMedia.Core.Services;
 using SocialMedia.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);

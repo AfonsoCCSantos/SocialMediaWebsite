@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions.Requests;
-using SocialMedia.Core;
+using SocialMedia.Core.Services;
 
 namespace SocialMedia.API.Controllers
 {

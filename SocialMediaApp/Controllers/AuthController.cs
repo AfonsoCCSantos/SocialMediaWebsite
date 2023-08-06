@@ -2,7 +2,8 @@
 using SocialMedia.Abstractions;
 using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
-using SocialMedia.Core.Authorization;
+using SocialMedia.Core;
+using SocialMedia.Core.Services;
 
 namespace SocialMedia.API.Controllers
 {
