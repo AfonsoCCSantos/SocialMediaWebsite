@@ -17,6 +17,7 @@ builder.Services.AddDbContext<SocialMediaContext>(options =>
 );
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<PostService>();
+builder.Services.AddScoped<PostInteractionService>();
 builder.Services.AddSingleton<JwtTokenFunctions>();
 builder.Services.SetupAuthentication(builder.Configuration);
 
