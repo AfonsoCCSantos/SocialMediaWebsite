@@ -11,6 +11,7 @@ namespace SocialMedia.Core.Services
     {
         private readonly SocialMediaContext _context;
         private readonly JwtTokenFunctions _jwtTokenFunctions;
+        private const int MAX_TIME_TO_EDIT_POST = 15;
 
         public PostService(SocialMediaContext context, JwtTokenFunctions jwtTokenFunctions)
         {
@@ -49,6 +50,13 @@ namespace SocialMedia.Core.Services
             {
                 return HttpStatusCode.NotFound;
             }
+
+            TimeSpan timeDifference = DateTime.UtcNow - post.CreatedAt;
+            if (timeDifference.TotalMinutes > MAX_TIME_TO_EDIT_POST)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
             await _context.Entry(post).Reference(p => p.User).LoadAsync();
             if (!post.User.UserName.Equals(username))
             {

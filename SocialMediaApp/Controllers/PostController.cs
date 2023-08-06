@@ -40,6 +40,7 @@ namespace SocialMedia.API.Controllers
                 HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Unauthorized => Unauthorized(),
                 HttpStatusCode.OK => Ok(),
+                HttpStatusCode.BadRequest => BadRequest(),
                 _ => StatusCode(500)
             };
         }
