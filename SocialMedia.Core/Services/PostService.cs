@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SocialMedia.Abstractions.DTOs;
 using SocialMedia.Abstractions.Models;
 using SocialMedia.Abstractions.Requests;
 using SocialMedia.Data;
@@ -76,6 +77,18 @@ namespace SocialMedia.Core.Services
             _context.Posts.Remove(post);
             _context.SaveChanges();
             return HttpStatusCode.OK;
+        }
+
+        public async Task<PostDTO?> GetPost(int postId, HttpContext httpContext)
+        {
+            var post = await _context.GetPostById(postId);
+            if (post == null) return null;
+
+            await _context.Entry(post).Reference(p => p.User).LoadAsync();
+            int likeCount = await _context.CountLikesOfPost(postId);
+            int shareCount = await _context.CountSharesOfPost(postId);
+            PostDTO postDTO = new PostDTO(post.Text, likeCount, shareCount, post.User.Id);
+            return postDTO;
         }
     }
 }

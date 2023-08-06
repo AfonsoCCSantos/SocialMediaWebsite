@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.Abstractions.DTOs;
 using SocialMedia.Abstractions.Requests;
 using SocialMedia.Core.Services;
 using System.Net;
@@ -56,6 +57,13 @@ namespace SocialMedia.API.Controllers
                 HttpStatusCode.BadRequest => BadRequest(),
                 _ => StatusCode(500)
             };
+        }
+
+        [HttpGet("{postId]}"), Authorize]
+        public async Task<PostDTO> GetPost(int postId)
+        {
+            var postDTO = await _postService.GetPost(postId, HttpContext);
+            return postDTO;
         }
     }
 }

@@ -18,5 +18,11 @@ namespace SocialMedia.Data
             var entry = await context.Likes.FirstOrDefaultAsync(l => l.UserId == userId && l.PostId == postId);
             return entry;
         }
+
+        public static async Task<int> CountLikesOfPost(this SocialMediaContext context, int postId)
+        {
+            int count = await context.Likes.CountAsync(likes => likes.PostId == postId);
+            return count;
+        }
     }
 }
