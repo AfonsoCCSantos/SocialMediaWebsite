@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Abstractions.Requests;
 using SocialMedia.Core.Services;
+using System.Net;
 
 namespace SocialMedia.API.Controllers
 {
@@ -20,24 +21,26 @@ namespace SocialMedia.API.Controllers
         [HttpPost, Authorize]
         public async Task<ActionResult> MakePostAsync(PostRequest request)
         {
-            int result = await _postService.MakePost(request, HttpContext);
+            var result = await _postService.MakePost(request, HttpContext);
             return result switch
             {
-                404 => BadRequest(),
-                401 => Unauthorized(),
-                _ => Ok(),
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Unauthorized => Unauthorized(),
+                HttpStatusCode.OK => Ok(),
+                _ => StatusCode(500)
             };
         }
 
         [HttpPatch("{postId}"), Authorize]
         public async Task<ActionResult> EditPost(int postId, PostRequest request)
         {
-            int result = await (_postService.EditPost(postId, request, HttpContext));
+            var result = await (_postService.EditPost(postId, request, HttpContext));
             return result switch
             {
-                404 => BadRequest(),
-                401 => Unauthorized(),
-                _ => Ok(),
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Unauthorized => Unauthorized(),
+                HttpStatusCode.OK => Ok(),
+                _ => StatusCode(500)
             };
         }
 
