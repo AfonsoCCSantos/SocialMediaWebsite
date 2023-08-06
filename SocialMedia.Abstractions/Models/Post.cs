@@ -22,10 +22,11 @@ namespace SocialMedia.Abstractions.Models
         }
 
 
-        public Post(string text, User user)
+        public Post(string text, User user, DateTime createdAt)
         {
             Text = text;
             User = user;
+            CreatedAt = createdAt;
         }
 
     }

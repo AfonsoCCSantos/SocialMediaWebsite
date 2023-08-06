@@ -34,7 +34,7 @@ namespace SocialMedia.Core.Services
                 return HttpStatusCode.NotFound;
             }
 
-            Post newPost = new(request.Text, user);
+            Post newPost = new(request.Text, user, DateTime.UtcNow);
             await _context.Posts.AddAsync(newPost);
             _context.SaveChanges();
             return HttpStatusCode.OK;
