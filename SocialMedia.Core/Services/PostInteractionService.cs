@@ -45,5 +45,30 @@ namespace SocialMedia.Core.Services
             _context.SaveChanges();
             return HttpStatusCode.OK;
         }
+
+        public async Task<HttpStatusCode> UnlikePost(int postId, HttpContext httpContext)
+        {
+            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            if (username == null)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            User? user = await _context.GetUserByUsername(username);
+
+            if (user == null)
+            {
+                return HttpStatusCode.NotFound;
+            }
+
+            var post = await _context.GetLikeByPostAndUser(postId, user.Id);
+            if (post == null)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+            _context.Remove(post);
+            _context.SaveChanges();
+            return HttpStatusCode.OK;
+        }
     }
 }
