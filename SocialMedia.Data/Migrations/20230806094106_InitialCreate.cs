@@ -80,14 +80,13 @@ namespace SocialMedia.Data.Migrations
                 name: "Likes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Likes", x => x.Id);
+                    table.PrimaryKey("PK_Likes", x => new { x.UserId, x.PostId });
                     table.ForeignKey(
                         name: "FK_Likes_Posts_PostId",
                         column: x => x.PostId,
@@ -104,14 +103,13 @@ namespace SocialMedia.Data.Migrations
                 name: "Shares",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false)
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shares", x => x.Id);
+                    table.PrimaryKey("PK_Shares", x => new { x.UserId, x.PostId });
                     table.ForeignKey(
                         name: "FK_Shares_Posts_PostId",
                         column: x => x.PostId,
@@ -140,11 +138,6 @@ namespace SocialMedia.Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_UserId",
-                table: "Likes",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
@@ -153,11 +146,6 @@ namespace SocialMedia.Data.Migrations
                 name: "IX_Shares_PostId",
                 table: "Shares",
                 column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shares_UserId",
-                table: "Shares",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_UserName_Email",

@@ -33,6 +33,9 @@ namespace SocialMedia.Data.Data
         private static void ConfigureSharesTable(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Shares>()
+                .HasKey(s => new { s.UserId, s.PostId });
+
+            modelBuilder.Entity<Shares>()
                 .HasOne(s => s.User)
                 .WithMany(u => u.SharedPosts)
                 .HasForeignKey(s => s.UserId)
@@ -47,6 +50,9 @@ namespace SocialMedia.Data.Data
 
         private static void ConfigureLikesTable(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Likes>()
+                .HasKey(l => new {l.UserId, l.PostId});
+
             modelBuilder.Entity<Likes>()
                 .HasOne(l => l.User)
                 .WithMany(u => u.LikedPosts)
