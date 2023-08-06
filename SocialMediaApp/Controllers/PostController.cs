@@ -28,5 +28,19 @@ namespace SocialMedia.API.Controllers
                 _ => Ok(),
             };
         }
+
+        [HttpPatch("{postId}"), Authorize]
+        public async Task<ActionResult> EditPost(int postId, PostRequest request)
+        {
+            int result = await (_postService.EditPost(postId, request, HttpContext));
+            return result switch
+            {
+                404 => BadRequest(),
+                401 => Unauthorized(),
+                _ => Ok(),
+            };
+        }
+
+
     }
 }

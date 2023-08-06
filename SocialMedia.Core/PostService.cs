@@ -40,5 +40,26 @@ namespace SocialMedia.Core
             _context.SaveChanges();
             return 200;
         }
+
+        public async Task<int> EditPost(int postId, PostRequest request, HttpContext httpContext)
+        {
+            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            var post = await _context.GetPostById(postId);
+
+            if (post == null)
+            {
+                return 404;
+            }
+            await _context.Entry(post).Reference(p => p.User).LoadAsync();
+            if (!post.User.UserName.Equals(username))
+            {
+                return 401;
+            }
+
+            post.Text = request.Text;
+            _context.Update(post);
+            _context.SaveChanges();
+            return 200;
+        }
     }
 }
