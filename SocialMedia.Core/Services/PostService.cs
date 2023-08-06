@@ -61,5 +61,21 @@ namespace SocialMedia.Core.Services
             _context.SaveChanges();
             return HttpStatusCode.OK;
         }
+
+        public async Task<HttpStatusCode> DeletePost(int postId, HttpContext httpContext)
+        {
+            var user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
+            if (user == null) return HttpStatusCode.Unauthorized;
+
+            var post = await _context.GetPostById(postId);
+            if (post == null) return HttpStatusCode.NotFound;
+
+            await _context.Entry(post).Reference(p => p.User).LoadAsync();
+            if (user.Id != post.User.Id) return HttpStatusCode.Unauthorized;
+
+            _context.Posts.Remove(post);
+            _context.SaveChanges();
+            return HttpStatusCode.OK;
+        }
     }
 }

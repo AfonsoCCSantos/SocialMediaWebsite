@@ -33,7 +33,7 @@ namespace SocialMedia.API.Controllers
         [HttpPatch("{postId}"), Authorize]
         public async Task<ActionResult> EditPost(int postId, PostRequest request)
         {
-            var result = await (_postService.EditPost(postId, request, HttpContext));
+            var result = await _postService.EditPost(postId, request, HttpContext);
             return result switch
             {
                 HttpStatusCode.NotFound => NotFound(),
@@ -44,6 +44,18 @@ namespace SocialMedia.API.Controllers
             };
         }
 
-
+        [HttpDelete("{postId}"), Authorize]
+        public async Task<ActionResult> DeletePost(int postId)
+        {
+            var result = await _postService.DeletePost(postId, HttpContext);
+            return result switch
+            {
+                HttpStatusCode.NotFound => NotFound(),
+                HttpStatusCode.Unauthorized => Unauthorized(),
+                HttpStatusCode.OK => Ok(),
+                HttpStatusCode.BadRequest => BadRequest(),
+                _ => StatusCode(500)
+            };
+        }
     }
 }
