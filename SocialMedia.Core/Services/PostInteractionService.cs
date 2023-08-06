@@ -11,12 +11,10 @@ namespace SocialMedia.Core.Services
     {
 
         private readonly SocialMediaContext _context;
-        private readonly JwtTokenFunctions _jwtTokenFunctions;
 
-        public PostInteractionService(SocialMediaContext context, JwtTokenFunctions jwtTokenFunctions)
+        public PostInteractionService(SocialMediaContext context)
         {
             _context = context;
-            _jwtTokenFunctions = jwtTokenFunctions;
         }
 
         public async Task<HttpStatusCode> LikePost(int postId, HttpContext httpContext)
