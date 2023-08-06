@@ -15,10 +15,10 @@ builder.Services.SetupSwagger();
 builder.Services.AddDbContext<SocialMediaContext>(options =>
     options.UseSqlServer(@"Data Source=DESKTOP-RFQKAUE\SQLEXPRESS;Initial Catalog=SocialMedia;Integrated Security=True;TrustServerCertificate=true;")
 );
+builder.Services.AddScoped<JwtTokenFunctions>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<PostService>();
 builder.Services.AddScoped<PostInteractionService>();
-builder.Services.AddSingleton<JwtTokenFunctions>();
 builder.Services.SetupAuthentication(builder.Configuration);
 
 var app = builder.Build();

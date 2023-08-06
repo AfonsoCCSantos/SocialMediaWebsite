@@ -10,27 +10,22 @@ namespace SocialMedia.Core.Services
     public class PostService
     {
         private readonly SocialMediaContext _context;
+        private readonly JwtTokenFunctions _jwtTokenFunctions;
         private const int MAX_TIME_TO_EDIT_POST = 15;
 
-        public PostService(SocialMediaContext context)
+        public PostService(SocialMediaContext context, JwtTokenFunctions jwtTokenFunctions)
         {
             _context = context;
+            _jwtTokenFunctions = jwtTokenFunctions;
         }
 
         public async Task<HttpStatusCode> MakePost(PostRequest request, HttpContext httpContext)
         {
 
-            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
-
-            if (username == null)
-            {
-                return HttpStatusCode.Unauthorized;
-            }
-
-            User? user = await _context.GetUserByUsername(username);
+            User? user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
             if (user == null)
             {
-                return HttpStatusCode.NotFound;
+                return HttpStatusCode.Unauthorized;
             }
 
             Post newPost = new(request.Text, user, DateTime.UtcNow);

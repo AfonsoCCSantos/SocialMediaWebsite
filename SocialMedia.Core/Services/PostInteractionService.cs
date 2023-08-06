@@ -11,25 +11,20 @@ namespace SocialMedia.Core.Services
     {
 
         private readonly SocialMediaContext _context;
+        private readonly JwtTokenFunctions _jwtTokenFunctions;
 
-        public PostInteractionService(SocialMediaContext context)
+        public PostInteractionService(SocialMediaContext context, JwtTokenFunctions jwtTokenFunctions)
         {
             _context = context;
+            _jwtTokenFunctions = jwtTokenFunctions;
         }
 
         public async Task<HttpStatusCode> LikePost(int postId, HttpContext httpContext)
         {
-            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
-
-            if (username == null)
-            {
-                return HttpStatusCode.Unauthorized;
-            }
-
-            User? user = await _context.GetUserByUsername(username);
+            User? user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
             if (user == null)
             {
-                return HttpStatusCode.NotFound;
+                return HttpStatusCode.Unauthorized;
             }
 
             bool userLikedPost = await _context.CheckIfUserLikedPost(postId, user.Id);
@@ -46,17 +41,11 @@ namespace SocialMedia.Core.Services
 
         public async Task<HttpStatusCode> UnlikePost(int postId, HttpContext httpContext)
         {
-            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
-            if (username == null)
-            {
-                return HttpStatusCode.Unauthorized;
-            }
-
-            User? user = await _context.GetUserByUsername(username);
+            User? user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
 
             if (user == null)
             {
-                return HttpStatusCode.NotFound;
+                return HttpStatusCode.Unauthorized;
             }
 
             var post = await _context.GetLikeByPostAndUser(postId, user.Id);

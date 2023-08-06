@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SocialMedia.Abstractions.Models;
+using SocialMedia.Data.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SocialMedia.Data;
 
 namespace SocialMedia.Core
 {
@@ -12,10 +14,12 @@ namespace SocialMedia.Core
     {
 
         private readonly IConfiguration _configuration;
+        private readonly SocialMediaContext _context;
 
-        public JwtTokenFunctions(IConfiguration configuration)
+        public JwtTokenFunctions(IConfiguration configuration, SocialMediaContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         public string CreateJwtToken(User user)
@@ -38,6 +42,14 @@ namespace SocialMedia.Core
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        public async Task<User?> GetUserFromTokenAsync(HttpRequest httpRequest)
+        {
+            var username = GetUsernameFromToken(httpRequest);
+            if (username == null) return null;
+            User? user = await _context.GetUserByUsername(username);
+            return user;
         }
 
         public static string? GetUsernameFromToken(HttpRequest httpRequest)

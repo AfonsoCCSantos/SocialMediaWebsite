@@ -24,7 +24,6 @@ namespace SocialMedia.API.Controllers
             var result = await _postService.MakePost(request, HttpContext);
             return result switch
             {
-                HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Unauthorized => Unauthorized(),
                 HttpStatusCode.OK => Ok(),
                 _ => StatusCode(500)

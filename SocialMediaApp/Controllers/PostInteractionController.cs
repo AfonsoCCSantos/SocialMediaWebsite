@@ -24,7 +24,6 @@ namespace SocialMedia.API.Controllers
             var result = await _postInteractionService.LikePost(postId, HttpContext);
             return result switch
             {
-                HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Unauthorized => Unauthorized(),
                 HttpStatusCode.OK => Ok(),
                 HttpStatusCode.BadRequest => BadRequest(),
@@ -38,7 +37,6 @@ namespace SocialMedia.API.Controllers
             var result = await _postInteractionService.UnlikePost(postId, HttpContext);
             return result switch
             {
-                HttpStatusCode.NotFound => NotFound(),
                 HttpStatusCode.Unauthorized => Unauthorized(),
                 HttpStatusCode.OK => Ok(),
                 HttpStatusCode.BadRequest => BadRequest(),
