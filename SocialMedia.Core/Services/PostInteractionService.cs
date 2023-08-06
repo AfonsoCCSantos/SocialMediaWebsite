@@ -30,7 +30,7 @@ namespace SocialMedia.Core.Services
             bool userLikedPost = await _context.CheckIfUserLikedPost(postId, user.Id);
             if (userLikedPost)
             {
-                return HttpStatusCode.BadRequest;
+                return HttpStatusCode.OK;
             }
 
             Likes newLike = new(user.Id, postId);
@@ -54,6 +54,45 @@ namespace SocialMedia.Core.Services
                 return HttpStatusCode.BadRequest;
             }
             _context.Remove(post);
+            _context.SaveChanges();
+            return HttpStatusCode.OK;
+        }
+
+        public async Task<HttpStatusCode> SharePost(int postId, HttpContext httpContext)
+        {
+            User? user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
+            if (user == null)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            bool userSharedPost = await _context.CheckIfUserSharedPost(postId, user.Id);
+            if (userSharedPost)
+            {
+                return HttpStatusCode.OK;
+            }
+
+            Shares newShare = new(user.Id, postId);
+            _context.Shares.Add(newShare);
+            _context.SaveChanges();
+            return HttpStatusCode.OK;
+        }
+
+        public async Task<HttpStatusCode> UnsharePost(int postId, HttpContext httpContext)
+        {
+            User? user = await _jwtTokenFunctions.GetUserFromTokenAsync(httpContext.Request);
+
+            if (user == null)
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+
+            var share = await _context.GetShareByPostAndUser(postId, user.Id);
+            if (share == null)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+            _context.Shares.Remove(share);
             _context.SaveChanges();
             return HttpStatusCode.OK;
         }
