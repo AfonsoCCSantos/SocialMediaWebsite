@@ -9,5 +9,16 @@
 
         public int PostId { get; set; }
         public Post Post { get; set; } = null!;
+
+        public Likes()
+        {
+            //Needed for EFCore
+        }
+
+        public Likes(int userId, int postId)
+        {
+            UserId = userId;
+            PostId = postId;
+        }
     }
 }

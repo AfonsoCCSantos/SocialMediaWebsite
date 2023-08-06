@@ -12,6 +12,11 @@ namespace SocialMedia.Data.Data
 
         public DbSet<Follow> Follows { get; set; } = null!;
 
+        public DbSet<Likes> Likes { get; set; } = null!;
+
+        public DbSet<Shares> Shares { get; set; } = null!;
+
+
         public SocialMediaContext(DbContextOptions<SocialMediaContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
