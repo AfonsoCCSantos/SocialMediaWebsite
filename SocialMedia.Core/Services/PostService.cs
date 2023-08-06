@@ -10,19 +10,17 @@ namespace SocialMedia.Core.Services
     public class PostService
     {
         private readonly SocialMediaContext _context;
-        private readonly JwtTokenFunctions _jwtTokenFunctions;
         private const int MAX_TIME_TO_EDIT_POST = 15;
 
-        public PostService(SocialMediaContext context, JwtTokenFunctions jwtTokenFunctions)
+        public PostService(SocialMediaContext context)
         {
             _context = context;
-            _jwtTokenFunctions = jwtTokenFunctions;
         }
 
         public async Task<HttpStatusCode> MakePost(PostRequest request, HttpContext httpContext)
         {
 
-            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
 
             if (username == null)
             {
@@ -43,7 +41,7 @@ namespace SocialMedia.Core.Services
 
         public async Task<HttpStatusCode> EditPost(int postId, PostRequest request, HttpContext httpContext)
         {
-            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
             var post = await _context.GetPostById(postId);
 
             if (post == null)

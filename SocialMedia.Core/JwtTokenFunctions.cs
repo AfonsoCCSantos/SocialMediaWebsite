@@ -40,7 +40,7 @@ namespace SocialMedia.Core
             return jwt;
         }
 
-        public string? GetUsernameFromToken(HttpRequest httpRequest)
+        public static string? GetUsernameFromToken(HttpRequest httpRequest)
         {
             var token = httpRequest.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var tokenHandler = new JwtSecurityTokenHandler();

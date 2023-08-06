@@ -21,7 +21,7 @@ namespace SocialMedia.Core.Services
 
         public async Task<HttpStatusCode> LikePost(int postId, HttpContext httpContext)
         {
-            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
 
             if (username == null)
             {
@@ -48,7 +48,7 @@ namespace SocialMedia.Core.Services
 
         public async Task<HttpStatusCode> UnlikePost(int postId, HttpContext httpContext)
         {
-            var username = _jwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
+            var username = JwtTokenFunctions.GetUsernameFromToken(httpContext.Request);
             if (username == null)
             {
                 return HttpStatusCode.Unauthorized;
